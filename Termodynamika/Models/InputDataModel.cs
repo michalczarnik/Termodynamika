@@ -322,5 +322,26 @@ namespace Termodynamika.Models
                 this._beta = value;
             }
         }
+
+        double _Temperature = double.NegativeInfinity;
+
+        public double Temperature
+        {
+            get
+            {
+                if (_Temperature != double.NegativeInfinity)
+                {
+                    return _Temperature;
+                }
+                else
+                {
+                    throw new FieldAccessException("The field Temperature cannot be empty!");
+                }
+            }
+            set
+            {
+                this._Temperature = value;
+            }
+        }
     }
 }

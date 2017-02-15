@@ -17,21 +17,21 @@ namespace Termodynamika.Utilities
                 InputDataModel input = new InputDataModel();
                 using(StreamReader sR = new StreamReader(s))
                 {
-                    input.CO = sR.ReadLine().ParseLine();
-                    input.CO2 = sR.ReadLine().ParseLine();
-                    input.CH4 = sR.ReadLine().ParseLine();
-                    input.O2 = sR.ReadLine().ParseLine();
-                    input.N2 = sR.ReadLine().ParseLine();
-                    input.H2 = sR.ReadLine().ParseLine();
-                    input.Lambda = sR.ReadLine().ParseLine();
-                    input.Vg = sR.ReadLine().ParseLine();
-                    input.tg = sR.ReadLine().ParseLine();
-                    input.tp = sR.ReadLine().ParseLine();
-                    input.twin = sR.ReadLine().ParseLine();
-                    input.mw = sR.ReadLine().ParseLine();
-                    input.A = sR.ReadLine().ParseLine();
-                    input.alfa = sR.ReadLine().ParseLine();
-                    input.beta = sR.ReadLine().ParseLine();
+                    input.CO = sR.ReadLine().TryParseDouble();
+                    input.CO2 = sR.ReadLine().TryParseDouble();
+                    input.CH4 = sR.ReadLine().TryParseDouble();
+                    input.O2 = sR.ReadLine().TryParseDouble();
+                    input.N2 = sR.ReadLine().TryParseDouble();
+                    input.H2 = sR.ReadLine().TryParseDouble();
+                    input.Lambda = sR.ReadLine().TryParseDouble();
+                    input.Vg = sR.ReadLine().TryParseDouble();
+                    input.tg = sR.ReadLine().TryParseDouble();
+                    input.tp = sR.ReadLine().TryParseDouble();
+                    input.twin = sR.ReadLine().TryParseDouble();
+                    input.mw = sR.ReadLine().TryParseDouble();
+                    input.A = sR.ReadLine().TryParseDouble();
+                    input.alfa = sR.ReadLine().TryParseDouble();
+                    input.beta = sR.ReadLine().TryParseDouble();
                     sR.Close();
                 }
                 return input;
@@ -39,7 +39,7 @@ namespace Termodynamika.Utilities
             throw new NullReferenceException(@"Can't read from file...");
         }
 
-        private static double ParseLine(this string line)
+        private static double TryParseDouble(this string line)
         {
             double value;
             if (double.TryParse(line.Trim(), out value))
@@ -57,6 +57,19 @@ namespace Termodynamika.Utilities
                 {
                     throw new FormatException("The format of the double is not supported.");
                 }
+            }
+        }
+
+        public static bool ParseDouble(this string line, out double value)
+        {
+            try
+            {
+                value = line.TryParseDouble();
+                return true;
+            }catch(Exception e)
+            {
+                value = double.NegativeInfinity;
+                return false;
             }
         }
 
